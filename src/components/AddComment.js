@@ -9,7 +9,7 @@ class AddComment extends Component {
     }
 
     handleAddComment = () => {
-        Alert.alert('add comment Funfou', this.state.comment)
+        Alert.alert('add comment Funfou', this.state.comment,)
     }
 
     render() {
@@ -55,7 +55,8 @@ const styles = StyleSheet.create({
         flex: 1,
         flexDirection: 'row',
         alignItems: 'center',
-        marginTop:10,
+        margin:10,
+        color:'#fff'
     },
     caption: {
         marginLeft:10,
@@ -63,7 +64,8 @@ const styles = StyleSheet.create({
         color:'#CCC'
     },
     input: {
-        width:'90%'
+        width:'90%',
+        color:'#000'
     }
 })
 
