@@ -1,11 +1,9 @@
 import 'react-native-gesture-handler';
 import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
-import { 
-  createBottomTabNavigator,
-} from '@react-navigation/bottom-tabs';
-
-import {  createSwitchNavigator} from '@react-navigation/compat'
+import { createBottomTabNavigator,} from '@react-navigation/bottom-tabs';
+import { createSwitchNavigator} from '@react-navigation/compat'
+import { createStackNavigator } from '@react-navigation/stack'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
  
@@ -13,11 +11,36 @@ import Feed from '../screens/Feed';
 import AddPhoto from '../screens/AddPhoto'
 import Profile from '../screens/Profile'
 import Login from '../screens/Login'
+import Register from '../screens/Register'
+
+const authRouter = createStackNavigator()
+
+const RootStack = () => {
+    return (
+        <authRouter.Navigator
+            initialRouteName="Login"
+            screenOptions={{ gestureEnabled: false }}
+        >
+            <authRouter.Screen
+                name="Login"
+                component={Login}
+                options={{ title: 'Login' }}
+            />
+            <authRouter.Screen
+                name="Register"
+                component={Register}
+                options={{ title: 'Crie sua conta...' }}
+
+            />
+        </authRouter.Navigator>
+    )
+}
+
 
 const LoginOrProfileRouter = createSwitchNavigator(
     {
         Profile: Profile,
-        Auth: Login
+        Auth: RootStack
     }, 
     {
         initialRouteName : 'Profile'
