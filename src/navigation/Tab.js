@@ -6,6 +6,7 @@ import FontAwesome from 'react-native-vector-icons/FontAwesome';
  
 import Feed from '../screens/Feed';
 import AddPhoto from '../screens/AddPhoto'
+import Profile from '../screens/Profile';
  
 const Tab = createBottomTabNavigator();
  
@@ -45,7 +46,7 @@ const Navigator = () => {
         />
         <Tab.Screen
           name={'Profile'}
-          component={Feed}
+          component={Profile}
           options={{
             title: 'Profile',
             tabBarIcon: ({ focused }) => (
