@@ -5,6 +5,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
  
 import Feed from '../screens/Feed';
+import AddPhoto from '../screens/AddPhoto'
  
 const Tab = createBottomTabNavigator();
  
@@ -30,9 +31,9 @@ const Navigator = () => {
         />
         <Tab.Screen
           name={'AddPhoto'}
-          component={Feed}
+          component={AddPhoto}
           options={{
-            title: 'Add Picture',
+            title: 'Adicionar foto',
             tabBarIcon: ({ focused }) => (
               <FontAwesome
                 name="camera"
