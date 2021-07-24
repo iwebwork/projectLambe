@@ -44,10 +44,10 @@ class Login extends Component {
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
-                    onPress={() => {}}
+                    onPress={() => {this.props.navigation.navigate('Register')}}
                 >
                     <Text
-                        style={styles.button}
+                        style={styles.buttonText}
                     >
                         Criar nova conta ...
                     </Text>
