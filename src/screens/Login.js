@@ -2,15 +2,19 @@ import React, {Component} from 'react'
 import {
     View,Text,StyleSheet,TouchableOpacity, TextInput
 } from 'react-native'
+import {connect} from 'react-redux'
+import {login} from '../store/actions/user'
 
 class Login extends Component {
 
     state = {
+        name:'Teste',
         email: '',
         password: ''
     }
 
     login = () => {
+        this.props.onLogin({...this.state})
         this.props.navigation.navigate('Profile')
     }
 
@@ -44,6 +48,7 @@ class Login extends Component {
                     </Text>
                 </TouchableOpacity>
                 <TouchableOpacity 
+                    style={styles.button}
                     onPress={() => {this.props.navigation.navigate('Register')}}
                 >
                     <Text
@@ -85,4 +90,12 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Login
+const mapDispatchToProps = dispatch => {
+    return {
+        onLogin: user => dispatch(login(user))
+    }
+}
+
+// export default Login
+export default connect(null, mapDispatchToProps)(Login)
+
