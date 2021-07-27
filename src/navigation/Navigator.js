@@ -43,7 +43,7 @@ const LoginOrProfileRouter = createSwitchNavigator(
         Auth: RootStack
     }, 
     {
-        initialRouteName : 'Profile'
+        initialRouteName : 'Auth'
     }
 )
 
