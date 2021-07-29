@@ -1,12 +1,17 @@
 import React, {Component} from 'react'
 import {View,StyleSheet, FlatList} from 'react-native'
+import {connect} from 'react-redux'
 import Header from '../components/Header'
 import Post from '../components/Post'
 
-import {connect} from 'react-redux'
+import {fetchPosts} from '../store/actions/posts'
 
 
 class Feed extends Component {
+
+    componentDidMount = () => {
+        this.props.onFetchPosts('Teste')
+    }
 
     render() {
         return(
@@ -39,4 +44,10 @@ const mapStateToProps = ({posts}) => {
     }
 }
 
-export default connect(mapStateToProps)(Feed)
+const mapDispatchToProps = dispatch => {
+    return {
+        onFetchPosts: userNickname => dispatch(fetchPosts(userNickname))
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Feed)
