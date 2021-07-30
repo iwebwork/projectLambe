@@ -2,6 +2,8 @@ import React, {Component} from 'react'
 import {
     View,Text,StyleSheet,TouchableOpacity, TextInput,
 } from 'react-native'
+import {connect} from 'react-redux'
+import {createUser} from '../store/actions/user'
 
 class Register extends Component {
 
@@ -39,7 +41,15 @@ class Register extends Component {
                 />
 
                 <TouchableOpacity 
-                    onPress={null}
+                    onPress={() => { 
+                            if(this.state.password.length < 9){
+                                alert('Por favor, insira uma senha com mais de 8 caracteres')
+                                return
+                            }
+
+                            this.props.onCreateUser(this.state)
+                        }
+                    }
                     style={styles.button}
                 >
                     <Text
@@ -65,7 +75,7 @@ const styles = StyleSheet.create({
         marginTop:30,
         padding:10,
         backgroundColor:'#4286f4',
-
+        
     },
     buttonText: {
         fontSize: 20,
@@ -81,4 +91,11 @@ const styles = StyleSheet.create({
     }
 })
 
-export default Register
+const mapDispatchToProps = dispatch => {
+    return {
+        onCreateUser: user => dispatch(createUser(user))
+    }
+}
+
+export default connect(null,mapDispatchToProps)(Register)
+// export default Register
