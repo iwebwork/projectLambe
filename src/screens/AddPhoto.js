@@ -16,6 +16,17 @@ class AddPhoto extends Component {
         comment:''
     }
 
+    componentDidUpdate = prevProps => {
+        // Conclui a postagem
+        if(prevProps.loading && !this.props.loading){
+            this.setState({
+                image: null,
+                comment: ''
+            })
+            this.props.navigation.navigate('Feed')
+        }
+    }
+
     pickImage = () => {
         if(!this.props.name){
             Alert.alert('Aviso!', noUser)
@@ -49,9 +60,6 @@ class AddPhoto extends Component {
                 comment: this.state.comment
             }]
         })
-
-        this.setState({image: null, comment: ''})
-        this.props.navigation.navigate('Feed')
     }
 
     render() {
@@ -82,8 +90,9 @@ class AddPhoto extends Component {
                         editable={this.props.name != null}
                     />
                     <TouchableOpacity
-                        style={styles.button}
+                        style={[styles.button, this.props.loading ? styles.buttonDisabled : null]}
                         onPress={this.save}
+                        disabled={this.props.loading}
                     >
                         <Text style={styles.buttonText}>
                             Salvar
@@ -126,6 +135,9 @@ const styles = StyleSheet.create({
         color:'#FFF',
         textAlign: 'center'
     },
+    buttonDisabled:{
+        backgroundColor:'#AAA'
+    },
     input: {
         color:'#000',
         marginTop: 20,
@@ -146,10 +158,11 @@ const styles = StyleSheet.create({
 }) 
 
 // export default AddPhoto
-const mapStateToProps = ({user}) => {
+const mapStateToProps = ({user, posts}) => {
     return {
         email: user.email,
-        name: user.name
+        name: user.name,
+        loading: posts.isUploading
     }
 }
 
