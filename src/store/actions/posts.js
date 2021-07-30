@@ -31,10 +31,24 @@ export const addPost = post => {
 }
 
 export const addComment = payload => {
-    return {
-        type: ADD_COMMENT,
-        payload
+    return dispatch => {
+        console.log(payload)
+        axios.get('/posts/'+payload.comment.nickname+'/'+payload.postId+'.json')
+            .catch(err => console.error(err))
+            .then(response =>{
+                const comments = response.data.comments || []
+                comments.push(payload.comment)
+                axios.patch('/posts/'+payload.comment.nickname+'/'+payload.postId+'.json', {comments})
+                    .catch(err => console.error(err))
+                    .then(response =>{
+                        dispatch(fetchPosts(payload.comment.nickname))
+                    })
+            })
     }
+    // return {
+    //     type: ADD_COMMENT,
+    //     payload
+    // }
 }
 
 export const setPosts = posts => {
