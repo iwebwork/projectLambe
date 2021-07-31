@@ -46,7 +46,7 @@ const mapStateToProps = ({posts}) => {
 
 const mapDispatchToProps = dispatch => {
     return {
-        onFetchPosts: userNickname => dispatch(fetchPosts(userNickname))
+        onFetchPosts: () => dispatch(fetchPosts())
     }
 }
 

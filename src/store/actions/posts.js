@@ -5,6 +5,7 @@ import {
     POST_CREATED 
 } from "./actionTypes"
 import axios from 'axios'
+import {setMessage} from './message'
 
 export const addPost = post => {
     return dispatch => {
@@ -17,15 +18,20 @@ export const addPost = post => {
                 image: post.image.base64
             }
         })
-        .catch(err => console.error(err))
-        .then( res => {
+        .catch(err => {
+            dispatch(setMessage({title:'Erro',text:'Ocorreu um erro inesperado!'}))
+        })
+        .then(res => {
             post.image = res.data.imageUrl
-            axios.post('/posts/'+post.nickname+'.json', {...post})
-                .catch(err => console.error(err))
-                .then(res => {
-                    dispatch(fetchPosts(post.nickname))
-                    dispatch(postCreated())
-                })
+            axios.post('/posts.json', {...post})
+            .catch(err => {
+                dispatch(setMessage({title:'Erro',text:'Ocorreu um erro inesperado!'}))                  
+            })
+            .then(res => {
+                dispatch(setMessage({title:'Sucesso',text:'Post cadastrado com sucesso!'}))                  
+                dispatch(fetchPosts())
+                dispatch(postCreated())
+            })
         })
     }
 }
@@ -33,7 +39,7 @@ export const addPost = post => {
 export const addComment = payload => {
     return dispatch => {
         console.log(payload)
-        axios.get('/posts/'+payload.comment.nickname+'/'+payload.postId+'.json')
+        axios.get('/posts/'+payload.postId+'.json')
             .catch(err => console.error(err))
             .then(response =>{
                 const comments = response.data.comments || []
@@ -41,7 +47,7 @@ export const addComment = payload => {
                 axios.patch('/posts/'+payload.comment.nickname+'/'+payload.postId+'.json', {comments})
                     .catch(err => console.error(err))
                     .then(response =>{
-                        dispatch(fetchPosts(payload.comment.nickname))
+                        dispatch(fetchPosts())
                     })
             })
     }
@@ -58,11 +64,11 @@ export const setPosts = posts => {
     }
 }
 
-export const fetchPosts = (userNickname) => {
+export const fetchPosts = () => {
     return dispatch => {
-        axios.get('/posts/'+userNickname+'.json')
+        axios.get('/posts.json')
             .catch(err =>{
-                err => console.error(err)
+                err => dispatch(setMessage({title:'Erro',text:'Ocorreu um erro ao listar os posts!'}))   
             })
             .then(response => {
                 const rowPosts = response.data;
