@@ -21,7 +21,7 @@ export const logout = () => {
 
 export const createUser = (user) =>{
     return dispatch => {
-        console.log(user)
+        dispatch(loadingUser())
         axios.post(authBaseURL + '/signupNewUser?key='+API_KEY, {
             email: user.email,
             password: user.password,
@@ -37,8 +37,11 @@ export const createUser = (user) =>{
                 }).catch(err =>{
                     dispatch(setMessage({title:'Erro',text:'Ocorreu um erro ao criar o usuário, tente novamente!'}))
                 })
-                .then((response) => {
-                    console.log(response.data)
+                .then(() => {
+                    delete user.password 
+                    user.id = response.data.localId
+                    dispatch(userLogged(user))
+                    dispatch(userLoaded())
                 })
             }
         })
@@ -72,9 +75,9 @@ export const login = (user) => {
         .then(response =>{
             if(response.data.localId){
                 axios.get('/users/'+response.data.localId+'.json')
-                .catch(err => console.log('Deu muito ruii'+err))
+                .catch(err => dispatch(setMessage({title:'Erro',text:'Ocorreu um erro ao realizar o login, tente novamente!'})))
                 .then(response => {
-                    user.password = null
+                    delete user.password
                     user.name = response.data.name 
                     dispatch(userLogged(user))
                     dispatch(userLoaded())

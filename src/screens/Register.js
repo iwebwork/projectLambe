@@ -13,6 +13,17 @@ class Register extends Component {
         password:''
     }
 
+    componentDidUpdate = prevProps => {
+        if(prevProps.isLoading && !this.props.isLoading){
+            this.setState({
+                name: '',
+                email: '',
+                password:''
+            })
+            this.props.navigation.navigate('Feed')
+        }
+    }
+
     render() {
         return (
 
@@ -97,5 +108,11 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(null,mapDispatchToProps)(Register)
+const mapStateToProps = ({user}) =>{
+    return {
+        isLoading: user.isLoading,
+    }
+}
+
+export default connect(mapStateToProps,mapDispatchToProps)(Register)
 // export default Register
