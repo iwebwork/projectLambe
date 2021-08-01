@@ -4,6 +4,7 @@ const initialState = {
     name: null,
     email: null,
     isLoading: false,
+    token: null
 }
 
 const reducer = (state = initialState, action) => {
@@ -13,13 +14,12 @@ const reducer = (state = initialState, action) => {
                 // O spread garante que eu não perca os valores anteriores do meu objeto, assim mantendo a estabilidade do mesmo
                 ...state,
                 name: action.payload.name,
-                email: action.payload.email
+                email: action.payload.email, 
+                token: action.payload.token,
             }
         case USER_LOGGED_OUT: {
             return {
-                ...state,
-                name: null,
-                email: null
+                ...initialState
             }
         }
         case LOADING_USER:

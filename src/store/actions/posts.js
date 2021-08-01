@@ -8,7 +8,7 @@ import axios from 'axios'
 import {setMessage} from './message'
 
 export const addPost = post => {
-    return dispatch => {
+    return (dispatch, getState) => {
         dispatch(creatingPosts())
         axios({
             url: 'uploadImage',
@@ -23,7 +23,7 @@ export const addPost = post => {
         })
         .then(res => {
             post.image = res.data.imageUrl
-            axios.post('/posts.json', {...post})
+            axios.post('/posts.json?auth='+getState().user.token, {...post})
             .catch(err => {
                 dispatch(setMessage({title:'Erro',text:'Ocorreu um erro inesperado!'}))                  
             })
@@ -37,24 +37,21 @@ export const addPost = post => {
 }
 
 export const addComment = payload => {
-    return dispatch => {
-        console.log(payload)
+    return (dispatch, getState) => {
         axios.get('/posts/'+payload.postId+'.json')
             .catch(err => console.error(err))
             .then(response =>{
                 const comments = response.data.comments || []
-                comments.push(payload.comment)
-                axios.patch('/posts/'+payload.comment.nickname+'/'+payload.postId+'.json', {comments})
-                    .catch(err => console.error(err))
+                axios.patch('/posts/'+payload.postId+'.json?auth='+getState().user.token, {comments})
+                    .catch(err => {
+                        dispatch(setMessage({title:'Erro',text:'Ocorreu algum erro ao cadastrar o comentario!'}))                  
+
+                    })
                     .then(response =>{
                         dispatch(fetchPosts())
                     })
             })
     }
-    // return {
-    //     type: ADD_COMMENT,
-    //     payload
-    // }
 }
 
 export const setPosts = posts => {

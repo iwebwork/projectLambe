@@ -38,10 +38,7 @@ export const createUser = (user) =>{
                     dispatch(setMessage({title:'Erro',text:'Ocorreu um erro ao criar o usuário, tente novamente!'}))
                 })
                 .then(() => {
-                    delete user.password 
-                    user.id = response.data.localId
-                    dispatch(userLogged(user))
-                    dispatch(userLoaded())
+                    dispatch(login(user))
                 })
             }
         })
@@ -74,6 +71,7 @@ export const login = (user) => {
         })
         .then(response =>{
             if(response.data.localId){
+                user.token = response.data.idToken
                 axios.get('/users/'+response.data.localId+'.json')
                 .catch(err => dispatch(setMessage({title:'Erro',text:'Ocorreu um erro ao realizar o login, tente novamente!'})))
                 .then(response => {
