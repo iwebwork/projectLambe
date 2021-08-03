@@ -6,12 +6,13 @@ import { createSwitchNavigator} from '@react-navigation/compat'
 import { createStackNavigator } from '@react-navigation/stack'
 
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
- 
+
 import Feed from '../screens/Feed';
 import AddPhoto from '../screens/AddPhoto'
 import Profile from '../screens/Profile'
 import Login from '../screens/Login'
 import Register from '../screens/Register'
+import Splash from '../screens/Splash'
 
 const authRouter = createStackNavigator()
 
@@ -40,10 +41,20 @@ const RootStack = () => {
 const LoginOrProfileRouter = createSwitchNavigator(
     {
         Profile: Profile,
-        Auth: RootStack
+        Auth: RootStack,
     }, 
     {
-        initialRouteName : 'Auth'
+        initialRouteName : 'RootStack'
+    }
+)
+
+const SplashOrFeed = createSwitchNavigator(
+    {
+        Splash: Splash,
+        Feed : Feed,
+    },
+    {
+        initialRouteName : 'Splash'
     }
 )
 
@@ -53,11 +64,11 @@ const Navigator = () => {
   return (
     <NavigationContainer>
       <Tab.Navigator
-        initialRouteName={'Feed'}
+        initialRouteName={'SplashOrFeed'}
         tabBarOptions={{ showLabel: false }}>
         <Tab.Screen
-          name={'Feed'}
-          component={Feed}
+          name={'SplashOrFeed'}
+          component={SplashOrFeed}
           options={{
             title: 'Feed',
             tabBarIcon: ({ focused }) => (
