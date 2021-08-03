@@ -10,13 +10,15 @@ import {fetchPosts} from '../store/actions/posts'
 class Feed extends Component {
 
     componentDidMount = () => {
-        this.props.onFetchPosts('Teste')
+        this.props.onFetchPosts()
     }
+
+    login = () => {this.props.navigation.navigate('Profile')}
 
     render() {
         return(
             <View style={styles.container}>
-                <Header/>
+                <Header login={this.login} />
                 <FlatList 
                     data={this.props.posts}    
                     keyExtractor = {item => `${item.id}`}
