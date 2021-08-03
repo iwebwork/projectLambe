@@ -29,7 +29,7 @@ class Profile extends Component {
                     onPress={this.logout}
                 >
                     <Text style={styles.buttonText}>
-                        Sair
+                        {this.props.email ? 'Sair': 'Logar'}
                     </Text>
                 </TouchableOpacity>
             </View>
