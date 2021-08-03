@@ -60,7 +60,10 @@ const styles = StyleSheet.create({
     button:{
         marginTop:30,
         padding:10,
-        backgroundColor:'#4286f4'
+        backgroundColor:'#4286f4',
+        width: 100,
+        borderRadius:30,
+        alignItems: 'center',
     },
     buttonText:{
         fontSize: 20,
