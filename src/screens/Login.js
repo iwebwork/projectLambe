@@ -8,7 +8,7 @@ import {login} from '../store/actions/user'
 class Login extends Component {
 
     state = {
-        name:'Teste',
+        name:'',
         email: '',
         password: ''
     }
@@ -45,6 +45,7 @@ class Login extends Component {
                 <TouchableOpacity 
                     onPress={this.login}
                     style={styles.button}
+                    disabled={this.props.isLoading}
                 >
                     <Text
                         style={styles.buttonText}
@@ -54,6 +55,7 @@ class Login extends Component {
                 </TouchableOpacity>
                 <TouchableOpacity 
                     style={styles.button}
+                    disabled={this.props.isLoading}
                     onPress={() => {this.props.navigation.navigate('Register')}}
                 >
                     <Text
@@ -78,7 +80,7 @@ const styles = StyleSheet.create({
     button: {
         marginTop:30,
         padding:10,
-        backgroundColor:'#4286f4',
+        backgroundColor: '#4286f4',
 
     },
     buttonText: {
