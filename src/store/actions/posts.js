@@ -39,15 +39,20 @@ export const addPost = post => {
 export const addComment = payload => {
     return (dispatch, getState) => {
         axios.get('/posts/'+payload.postId+'.json')
-            .catch(err => console.error(err))
+            .catch(err =>                         
+                dispatch(setMessage({title:'Erro',text:'Ocorreu algum erro ao buscar o post!'}))                  
+            )
             .then(response =>{
+                console.log(payload)
                 const comments = response.data.comments || []
+                comments.push(payload.comment)
                 axios.patch('/posts/'+payload.postId+'.json?auth='+getState().user.token, {comments})
                     .catch(err => {
                         dispatch(setMessage({title:'Erro',text:'Ocorreu algum erro ao cadastrar o comentario!'}))                  
 
                     })
                     .then(response =>{
+                        dispatch(setMessage({title:'Sucesso',text:'Comentario adicionado com sucesso!' }))                  
                         dispatch(fetchPosts())
                     })
             })
