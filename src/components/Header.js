@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import {StyleSheet, Text, View, Image} from 'react-native'
+import {StyleSheet, Text, View, Image, TouchableOpacity} from 'react-native'
 import {connect} from 'react-redux'
 import {Gravatar} from 'react-native-gravatar'
 import icon from '../../assets/imgs/icon.png'
@@ -7,7 +7,7 @@ import icon from '../../assets/imgs/icon.png'
 class Header extends Component  {
 
     render(){
-        const name = this.props.name || 'Anonymous'
+        const name = this.props.name || 'Logar'
         const gravatar = this.props.email 
             ? <Gravatar options={{ email: this.props.email , secure: true}}
                 style={styles.avatar}/>
@@ -20,10 +20,14 @@ class Header extends Component  {
                         Lambe Lambe
                     </Text>
                 </View>
-                <View style={styles.userContainer}>
-                    <Text style={styles.user}>{name}</Text>
-                    {gravatar}
-                </View>
+                <TouchableOpacity
+                    onPress={this.props.login}
+                >
+                    <View style={styles.userContainer}>
+                        <Text style={styles.user}>{name}</Text>
+                        {gravatar}
+                    </View>
+                </TouchableOpacity>
             </View>
         )
     }
@@ -61,7 +65,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     user:{
-        fontSize: 10,
+        fontSize: 14,
         color:'#888'
     },
     avatar: {
