@@ -73,7 +73,11 @@ export const login = (user) => {
             if(response.data.localId){
                 user.token = response.data.idToken
                 axios.get('/users/'+response.data.localId+'.json')
-                .catch(err => dispatch(setMessage({title:'Erro',text:'Ocorreu um erro ao realizar o login, tente novamente!'})))
+                .catch(err => 
+                    {
+                        dispatch(setMessage({title:'Erro',text:'Ocorreu um erro ao realizar o login, tente novamente!'}))
+                    }
+                )
                 .then(response => {
                     delete user.password
                     user.name = response.data.name 
