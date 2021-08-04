@@ -33,6 +33,8 @@ class Login extends Component {
                     keyboard='email-address'
                     value={this.state.email}
                     onChangeText={(email) => this.setState({email})}
+                    placeholderTextColor={'#9B97A8'}
+
                 />
                 <TextInput  
                     style={styles.input}
@@ -40,6 +42,7 @@ class Login extends Component {
                     secureTextEntry={true}
                     value={this.state.password}
                     onChangeText={(password) => this.setState({password})}
+                    placeholderTextColor={'#9B97A8'}
                 />
 
                 <TouchableOpacity 
@@ -101,7 +104,8 @@ const styles = StyleSheet.create({
         height:40,
         borderWidth:1,
         borderColor:'#333',
-        borderRadius:15
+        borderRadius:15,
+        color:'#000'
     }
 })
 
